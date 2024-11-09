@@ -1,0 +1,18 @@
+SECRET_KEY=django-insecure-c#xk^#u!rk(vynn#!69^9n&ss#83^)o_$nqkk9@&=$&u8y0ts^
+DEBUG=True
+AGE=56
+ALLOWED_HOSTS=127.0.0.1,0.0.0.0,0.0.0.0:8000,localhost
+DATABASE_URL=postgresql://spout_db_user:naNGQq9lX3Z7aLi3tdCuALPukwjJRMUq@dpg-crqrfkbv2p9s73e90uk0-a.singapore-postgres.render.com/spout_db
+DATABASE_NAME=spout-dev-db
+DATABASE_USER=postgres
+DATABASE_PASSWORD=ca3T8pm-cARteuJuHKao
+DATABASE_HOST=spout-dev-db.c5kcgee0k40w.ap-southeast-1.rds.amazonaws.com
+DATABASE_PORT=5432
+AWS_COGNITO_USER_POOL_ID = “ap-southeast-2_v5GOMajxt”
+CLIENT_ID = “7trefn6t6c6o2at9cvtffeatit”
+EMAIL_HOST=smtp.gmail.com
+EMAIL_PORT=587
+EMAIL_HOST_USER=quan.hoang882002@gmail.com
+EMAIL_HOST_PASSWORD=blml bbmi pokc mlik
+EMAIL_USE_TLS=True
+EMAIL_USE_SSL=False

@@ -1,0 +1,10 @@
+FROM spout/spout-dev-base
+
+# Copy project files
+COPY . /app/
+
+# Set environment variable for Django settings
+ENV DJANGO_SETTINGS_MODULE=server.settings
+
+# Run migrations and start the application with gunicorn
+CMD ["sh", "-c", "python manage.py migrate && gunicorn server.wsgi:application --bind 0.0.0.0:8000 --workers 3"]

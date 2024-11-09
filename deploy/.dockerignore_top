@@ -1,0 +1,62 @@
+.gitignore
+build_tag_push
+README*
+Dockerfile
+Dockerfile_base
+
+.git/
+
+# Ignore Python cache files
+__pycache__
+__pycache__/
+**/__pycache__/
+*.py[cod]
+*$py.class
+
+# Ignore virtual environments
+env/
+venv/
+
+# Ignore distribution / packaging files
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+pip-wheel-metadata/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Ignore logs
+*.log
+
+# Ignore local settings
+local_settings.py
+
+# Ignore database files
+db.sqlite3
+db.sqlite3-journal
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints
+
+# Ignore IDE/editor specific files
+.vscode/
+.idea/
+*.swp
+
+# Ignore Docker-related files
+Dockerfile
+docker-compose.yml
+.dockerignore
