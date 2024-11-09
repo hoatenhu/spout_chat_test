@@ -1,4 +1,3 @@
-import os
 import json
 import boto3
 from channels.generic.websocket import AsyncWebsocketConsumer
@@ -8,7 +7,7 @@ import logging
 from botocore.exceptions import ClientError
 import uuid
 from decouple import config
-from app.helpers.conversation import create_conversation
+from app.helpers.conversation import create_conversation, send_whatsapp_message
 from app.helpers.dynamodb_helpers import get_dynamodb_resource  # Import the helper function
 
 class ChatConsumer(AsyncWebsocketConsumer):
@@ -142,6 +141,10 @@ class ChatConsumer(AsyncWebsocketConsumer):
                 'message': message
             }
         )
+        # Send WhatsApp message after storing in DynamoDB
+        phone_number = self.customer_id
+        whatsapp_response = await sync_to_async(send_whatsapp_message)(phone_number, message)
+        logging.info(f"WhatsApp response: {whatsapp_response}")
 
     async def chat_message(self, event):
         message = event['message']

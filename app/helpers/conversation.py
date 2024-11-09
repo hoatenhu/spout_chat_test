@@ -2,14 +2,19 @@ from botocore.exceptions import ClientError
 import boto3
 import uuid
 from datetime import datetime
+from decouple import config
+import requests
 from app.helpers.dynamodb_helpers import get_dynamodb_resource
+
+WA_ACCESS_TOKEN = config("WA_ACCESS_TOKEN")
+SPOUT_PHONE_NUMBER_ID = config("SPOUT_PHONE_NUMBER_ID")
+WA_CONFIG_TOKEN = config("WA_CONFIG_TOKEN")
 
 # Initialize DynamoDB resource
 dynamodb = get_dynamodb_resource()
 
 def create_tables_if_not_exist():
     """Ensure that the required DynamoDB tables exist."""
-
     # Create Conversations table if it doesn't exist
     try:
         conversations_table = dynamodb.Table('Conversations')
@@ -96,3 +101,28 @@ def create_conversation(customer_id):
         return conversation_id  # Return the new conversation_id
     else:
         return response['Items'][0]['conversation_id']  # Return existing conversation_id
+
+def send_whatsapp_message(to_phone_id, message):
+    if not WA_ACCESS_TOKEN or not SPOUT_PHONE_NUMBER_ID:
+        print("Error: Access token or phone number ID is not defined.")
+        return {"error": "Missing credentials"}
+    url = f"https://graph.facebook.com/v20.0/{SPOUT_PHONE_NUMBER_ID}/messages"
+    headers = {
+        "Authorization": f"Bearer {WA_ACCESS_TOKEN}", 
+        "Content-Type": "application/json"
+    }
+    payload = {
+        "messaging_product": "whatsapp",
+        "recipient_type": "individual",
+        "to": to_phone_id,
+        "type": "text",
+        "text": {"body": message}
+    }
+
+    try:
+        response = requests.post(url, headers=headers, json=payload)
+        response.raise_for_status()
+        return response.json()
+    except requests.exceptions.RequestException as e:
+        print(f"Error sending message: {e}")
+        return {"error": str(e)}
