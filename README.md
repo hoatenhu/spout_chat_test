@@ -102,6 +102,11 @@ Spout Backend is a Django-based web application designed to manage user interact
    python manage.py runserver
    ```
 
+11. **Deploy Server ASGI**:
+   ```bash
+   gunicorn server.wsgi:application --bind 0.0.0.0:8000 --workers 3
+   ```
+
 ## 🖥️ Usage
 - Access the application at `http://127.0.0.1:8000/`.
 

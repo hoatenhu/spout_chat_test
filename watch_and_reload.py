@@ -21,7 +21,7 @@ class ChangeHandler(FileSystemEventHandler):
 
 if __name__ == "__main__":
     path = "."
-    command = "daphne server.asgi:application" 
+    command = "daphne -b 0.0.0.0 -p 8000 server.asgi:application" 
     event_handler = ChangeHandler(command)
     observer = Observer()
     observer.schedule(event_handler, path, recursive=True)

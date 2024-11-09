@@ -5,6 +5,8 @@ from django.views.decorators.csrf import csrf_exempt
 from decouple import config
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import AllowAny
+from app.helpers.conversation import create_conversation
+
 
 WA_ACCESS_TOKEN = config("WA_ACCESS_TOKEN")
 WA_CONFIG_TOKEN = config("WA_CONFIG_TOKEN")
@@ -25,6 +27,11 @@ def webhook(request):
     elif request.method == "POST":
         data = json.loads(request.body.decode("utf-8"))
         print("Received data:", json.dumps(data, indent=2))
+        customer_id = data.get('entry', [{}])[0].get('changes', [{}])[0].get('value', {}).get('contacts', [{}])[0].get('wa_id')
+        if customer_id:
+            conversation_id = create_conversation(customer_id)
+            if conversation_id is None:
+                return JsonResponse({'error': 'Failed to access Conversations table'}, status=500)
         return JsonResponse({'status': 'received'}, status=200)
     return JsonResponse({'error': 'Invalid request method'}, status=405)
 

@@ -1,0 +1,41 @@
+{
+  "object": "whatsapp_business_account",
+  "entry": [
+    {
+      "id": "145879811951705",
+      "changes": [
+        {
+          "value": {
+            "messaging_product": "whatsapp",
+            "metadata": {
+              "display_phone_number": "15550915572",
+              "phone_number_id": "146917221848578"
+            },
+            "contacts": [
+              {
+                "profile": {
+                  "name": "Nathan Le"
+                },
+                "wa_id": "84369010192"
+              }
+            ],
+            "messages": [
+              {
+                "from": "84369010192",
+                "id": "wamid.HBgLODQzNjkwMTAxOTIVAgASGBQzQTM0N0NCN0EyRkUzMTFDNkVGQwA=",
+                "timestamp": "1731127547",
+                "type": "image",
+                "image": {
+                  "mime_type": "image/jpeg",
+                  "sha256": "maLQlHuEK1ZZJCO02+NH4PBiYiBUSK621yCfWeacEJA=",
+                  "id": "1599051137628823"
+                }
+              }
+            ]
+          },
+          "field": "messages"
+        }
+      ]
+    }
+  ]
+}
