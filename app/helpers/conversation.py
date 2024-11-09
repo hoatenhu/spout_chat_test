@@ -6,8 +6,10 @@ from decouple import config
 import requests
 from app.helpers.dynamodb_helpers import get_dynamodb_resource
 
-WA_ACCESS_TOKEN = config("WA_ACCESS_TOKEN")
-SPOUT_PHONE_NUMBER_ID = config("SPOUT_PHONE_NUMBER_ID")
+# WA_ACCESS_TOKEN = config("WA_ACCESS_TOKEN")
+# SPOUT_PHONE_NUMBER_ID = config("SPOUT_PHONE_NUMBER_ID")
+WA_ACCESS_TOKEN = "EAATBZATwXvg0BO0D7P6F0SN0WFVOfYpJaZBJ2ndXtFZAKCH0hZCu6TRiLJ4IhDIzHVT9VZBZARwc3VEHHfNg8VairZBHace7oRsj3kpiWYazW6sKpkzFHu7gotTeDToDxjtGguZAx3b8seTjqYTtbCIHDr2cRLYT7ZCoRqlZB4rZC4202TVsOytE0pJmZCOHhFPcZAxfuxkkZCflzT5xlcQ6OcVOK9CIFo6IEvax7HegVpnXt5YFYZD"
+SPOUT_PHONE_NUMBER_ID = "146917221848578"
 WA_CONFIG_TOKEN = config("WA_CONFIG_TOKEN")
 
 # Initialize DynamoDB resource
