@@ -142,7 +142,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             self.room_group_name,
             {
                 'type': 'chat_message',
-                'message': message
+                'message': message,
+                'sender_id': self.sender_id
             }
         )
         # Send WhatsApp message after storing in DynamoDB
@@ -152,10 +153,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def chat_message(self, event):
         message = event['message']
+        sender_id = event['sender_id']
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
             'message': message,
-            'sender_id': self.sender_id,
+            'sender_id': sender_id,
             'timestamp': datetime.now().isoformat()
         }))
