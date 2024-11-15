@@ -8,7 +8,7 @@ from app.helpers.dynamodb_helpers import get_dynamodb_resource
 
 # WA_ACCESS_TOKEN = config("WA_ACCESS_TOKEN")
 # SPOUT_PHONE_NUMBER_ID = config("SPOUT_PHONE_NUMBER_ID")
-WA_ACCESS_TOKEN = "EAATBZATwXvg0BOZBpmqyZB2gv2yQ3FK2mcJqbCYUxpXrOtZAYZBQDV0NFYilCZCadJWC7uVUbb795dT2zdnM5rGmNdP6fI47hLVNcG8g2LwRCzDsNb8KmmFgf717ZAfJek90q4hviMcDZBIvJAZAqrNg5nq2oYDivOxoHiQA0WToPulOkGtZCmfF01aVVmtnCIZBr6JgQTaXwvss71xmAYuuo76Bk91wZBlyKOmq9ZAYZBNFzUFu0ZD"
+WA_ACCESS_TOKEN = "EAATBZATwXvg0BO3419L2OfMRYLDRulW5SAibkKIyXJZCubWP2FADe6NWZA1o7BFzUbM147f7d3ZC2CNRKbHicvVwJPY4YnEKbvvZBYYuIADQxv1ojXZCp6w4nTi5eteMh3gZCO09GND0ZBTZBt7zU3W6IxIq5XrQmFE8dZCyVsq2RfOZCbw2nHaQvGa7HEPQOWyCnehXuRB6eXut2DGPzcQDdctNvoAtc4Q8JRlsIt18PbdIAUZD"
 SPOUT_PHONE_NUMBER_ID = "146917221848578"
 WA_CONFIG_TOKEN = config("WA_CONFIG_TOKEN")
 
@@ -85,11 +85,14 @@ def create_conversation(customer_id):
     )
     if not response['Items']:
         # Create a new conversation item
+        # admin vendor_id -> channel_id (1), channel_id (2)
+        # Spa 1 (vendor 1) -> channel 1(channel 1) <- customer
         conversation_id = str(uuid.uuid4())  # Generate a new conversation_id
         conversations_table.put_item(
             Item={
                 'conversation_id': conversation_id,
                 'customer_id': customer_id,
+                # 'channel_id': channel_id,
                 'vendor_id': 'your_vendor_id',  # Replace with actual vendorId logic
                 'started_at': datetime.now().isoformat(),
                 'updated_at': datetime.now().isoformat(),

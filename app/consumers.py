@@ -5,14 +5,13 @@ from asgiref.sync import sync_to_async
 from datetime import datetime
 import logging
 from botocore.exceptions import ClientError
-import uuid
-from decouple import config
 from app.helpers.conversation import create_conversation, send_whatsapp_message
-from app.helpers.dynamodb_helpers import get_dynamodb_resource  # Import the helper function
+from app.helpers.dynamodb_helpers import get_dynamodb_resource
 
 class ChatConsumer(AsyncWebsocketConsumer):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
+        self.sender_id = None  # Initialize sender_id
         
         self.dynamodb = get_dynamodb_resource()
         
@@ -110,6 +109,17 @@ class ChatConsumer(AsyncWebsocketConsumer):
         try:
             text_data_json = json.loads(text_data)
             message = text_data_json['message']
+
+            # Extract sender_id from the first message
+            if self.sender_id is None:
+                self.sender_id = text_data_json.get('sender_id')
+                if not self.sender_id:
+                    logging.error("sender_id is missing in the first message.")
+                    await self.send(text_data=json.dumps({
+                        'error': 'sender_id is required in the first message.'
+                    }))
+                    return
+
         except json.JSONDecodeError as e:
             logging.error(f"JSON decode error: {e}")
             await self.send(text_data=json.dumps({
@@ -122,7 +132,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             await sync_to_async(self.table.put_item)(
                 Item={
                     'customer_id': self.customer_id,
-                    'conversation_id': self.conversation_id,  # Add conversation_id
+                    'conversation_id': self.conversation_id,
+                    'sender_id': self.sender_id,  # Use the extracted sender_id
                     'message': message,
                     'timestamp': datetime.now().isoformat()
                 }
