@@ -83,7 +83,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
             for message in messages:
                 await self.send(text_data=json.dumps({
                     'message': message['message'],
-                    'timestamp': message['timestamp']
+                    'timestamp': message['timestamp'],
+                    'sender_id': message['sender_id']
                 }))
         except Exception as e:
             logging.error(f"Error fetching message history: {e}")
