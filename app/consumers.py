@@ -110,16 +110,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         try:
             text_data_json = json.loads(text_data)
             message = text_data_json['message']
-
             # Extract sender_id from the first message
-            if self.sender_id is None:
-                self.sender_id = text_data_json.get('sender_id')
-                if not self.sender_id:
-                    logging.error("sender_id is missing in the first message.")
-                    await self.send(text_data=json.dumps({
-                        'error': 'sender_id is required in the first message.'
-                    }))
-                    return
+            self.sender_id = text_data_json.get('sender_id')
 
         except json.JSONDecodeError as e:
             logging.error(f"JSON decode error: {e}")
