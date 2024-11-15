@@ -47,7 +47,9 @@ def webhook(request):
                     f'chat_{customer_id}',  # Group name based on customer_id
                     {
                         'type': 'chat_message',  # This should match the method in ChatConsumer
-                        'message': message_body  # The message you want to send
+                        'message': message_body,  # The message you want to send
+                        'sender_id': customer_id,
+                        'timestamp': datetime.now().isoformat(),
                     }
                 )
                 # Save the message to the DynamoDB Messages table
@@ -57,7 +59,8 @@ def webhook(request):
                         'customer_id': customer_id,
                         'conversation_id': conversation_id,  # Add conversation_id
                         'message': message_body,
-                        'timestamp': datetime.now().isoformat()
+                        'timestamp': datetime.now().isoformat(),
+                        'sender_id': customer_id
                     }
                 ) 
             except Exception as e:

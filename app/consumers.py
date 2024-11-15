@@ -162,5 +162,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
         # Send message to WebSocket
         await self.send(text_data=json.dumps({
-            'message': message
+            'message': message,
+            'sender_id': self.sender_id,
+            'timestamp': datetime.now().isoformat()
         }))
